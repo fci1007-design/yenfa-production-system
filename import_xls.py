@@ -9,9 +9,16 @@ import re
 from datetime import datetime
 import database as db
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-FILE1 = os.path.join(BASE_DIR, "2026.03急件.xls")
-FILE2 = os.path.join(BASE_DIR, "2026當周出貨排程.xls")
+SELF_DIR = os.path.dirname(__file__)
+BASE_DIR = os.path.dirname(SELF_DIR)
+# 優先找同目錄，找不到再找上層目錄
+_f1_local = os.path.join(SELF_DIR, "2026.03急件.xls")
+_f1_parent = os.path.join(BASE_DIR, "2026.03急件.xls")
+FILE1 = _f1_local if os.path.exists(_f1_local) else _f1_parent
+
+_f2_local = os.path.join(SELF_DIR, "2026當周出貨排程.xls")
+_f2_parent = os.path.join(BASE_DIR, "2026當周出貨排程.xls")
+FILE2 = _f2_local if os.path.exists(_f2_local) else _f2_parent
 
 
 def _xldate_to_str(value, book):
